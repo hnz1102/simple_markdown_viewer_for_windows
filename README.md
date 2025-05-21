@@ -29,8 +29,8 @@ Markdown Viewerは、マークダウンファイル（.md）を簡単に表示�
 
 ## インストール方法
 
-1. [リリースページ](https://github.com/yourorganization/markdown-viewer/releases)から最新の「MarkdownViewer.msi」をダウンロードします
-2. ダウンロードしたMSIファイルをダブルクリックします
+1. [リリースページ](https://github.com/hnz1102/simple_markdown_viewer_for_windows/release/MarkdownViewer.zip)から最新の「MarkdownViewer.zip」をダウンロードします
+2. ダウンロードしたZIPファイルを展開し、MSIファイルをダブルクリックします
 3. インストールウィザードの指示に従ってインストールを完了します
 4. インストール完了後、スタートメニューまたはデスクトップのショートカットからアプリケーションを起動できます
 
@@ -96,8 +96,8 @@ Markdown Viewer is a simple Windows desktop application for easily viewing markd
 
 ## Installation
 
-1. Download the latest "MarkdownViewer.msi" from the [releases page](https://github.com/yourorganization/markdown-viewer/releases)
-2. Double-click the downloaded MSI file
+1. Download the latest "MarkdownViewer.zip" from the [releases page](https://github.com/hnz1102/simple_markdown_viewer_for_windows/release/MarkdownViewer.zip)
+2. Uncompressed the zip file and double-click the downloaded MSI file
 3. Follow the installation wizard instructions to complete the installation
 4. After installation, you can launch the application from the Start menu or desktop shortcut
 
