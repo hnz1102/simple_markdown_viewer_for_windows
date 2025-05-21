@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Id="MarkdownViewer.Installer" Name="Markdown Viewer" Manufacturer="HNZ" Version="1.0.0.0">
+    <Icon Id="AppIcon" SourceFile="..\\AppIcon.ico" />
+    <StandardDirectory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLFOLDER" Name="Markdown Viewer">
+        <Component Id="ExeComponent" Guid="{3F2504E0-4F89-11D3-9A0C-0305E82C3301}">
+          <File Id="MainExecutable" Name="markdown-viewer.exe" Source="..\\bin\\Release\\net9.0-windows\\markdown-viewer.exe" />
+          <!-- .mdファイル関連付けをここに移動 -->
+          <ProgId Id="MarkdownViewer.mdfile" Description="Markdown File" Advertise="no">
+            <Extension Id="md" ContentType="text/markdown">
+              <Verb Id="open" Command="Open" TargetFile="MainExecutable" Argument="&quot;%1&quot;" />
+            </Extension>
+          </ProgId>
+        </Component>
+        <Component Id="DllComponent" Guid="{6F9619FF-8B86-D011-B42D-00C04FC964FF}">
+          <File Id="MainDll" Source="..\\bin\\Release\\net9.0-windows\\markdown-viewer.dll" />
+        </Component>
+        <Component Id="PdbComponent" Guid="{2E8DEE13-F549-409C-8771-39A31F2AD5F2}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\markdown-viewer.pdb" />
+        </Component>
+        <Component Id="MarkdigComponent" Guid="{B4F97780-5875-414C-A4C5-EF9CF1D64D7B}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Markdig.dll" />
+        </Component>
+        <Component Id="DepsJsonComponent" Guid="{C8E4360D-F72B-4D31-8042-ACA6118CE5B7}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\markdown-viewer.deps.json" />
+        </Component>
+        <Component Id="RuntimeConfigJsonComponent" Guid="{D91A5C60-6A5C-48D1-ACE1-F81D5D7AD434}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\markdown-viewer.runtimeconfig.json" />
+        </Component>
+        <Component Id="WebView2CoreComponent" Guid="{E39C7F3F-943D-4BDE-8B46-CA94D6276ABE}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Microsoft.Web.WebView2.Core.dll" />
+        </Component>
+        <Component Id="WebView2WinFormsComponent" Guid="{4F52B581-11C5-48D3-91A6-385D489E80F8}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Microsoft.Web.WebView2.WinForms.dll" />
+        </Component>
+        <Component Id="WebView2WpfComponent" Guid="{5A5710A9-97D3-48D6-BEBC-BC75C9F25F32}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Microsoft.Web.WebView2.Wpf.dll" />
+        </Component>
+        <Component Id="WebView2CoreXmlComponent" Guid="{6B6D169A-FE6F-4DBB-8E82-37C73B33C334}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Microsoft.Web.WebView2.Core.xml" />
+        </Component>
+        <Component Id="WebView2WinFormsXmlComponent" Guid="{7C7E2720-D433-4572-9DDA-990265880C35}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Microsoft.Web.WebView2.WinForms.xml" />
+        </Component>
+        <Component Id="WebView2WpfXmlComponent" Guid="{8D8F5289-3C1C-4317-A7CF-ED0727F8E87B}">
+          <File Source="..\\bin\\Release\\net9.0-windows\\Microsoft.Web.WebView2.Wpf.xml" />
+        </Component>
+
+        <!-- runtimes フォルダを分割して追加 -->
+        <Directory Id="RUNTIMESDIR" Name="runtimes">
+          <!-- win-x64 -->
+          <Directory Id="RUNTIMESWINX64" Name="win-x64">
+            <Directory Id="RUNTIMESWINX64LIB" Name="native">
+              <Component Id="WebView2LoaderX64" Guid="{9E926835-1A07-4DB8-8FF2-D3F6ABDDD381}">
+                <File Source="..\\bin\\Release\\net9.0-windows\\runtimes\\win-x64\\native\\WebView2Loader.dll" />
+              </Component>
+            </Directory>
+          </Directory>
+          
+          <!-- win-x86 -->
+          <Directory Id="RUNTIMESWINX86" Name="win-x86">
+            <Directory Id="RUNTIMESWINX86LIB" Name="native">
+              <Component Id="WebView2LoaderX86" Guid="{0F93CE0D-2B19-472C-9D9B-C5C16388647A}">
+                <File Source="..\\bin\\Release\\net9.0-windows\\runtimes\\win-x86\\native\\WebView2Loader.dll" />
+              </Component>
+            </Directory>
+          </Directory>
+          
+          <!-- win-arm64 -->
+          <Directory Id="RUNTIMESWINARM64" Name="win-arm64">
+            <Directory Id="RUNTIMESWINARM64LIB" Name="native">
+              <Component Id="WebView2LoaderARM64" Guid="{1FA4B7A9-3C8E-4982-A4BB-D89C1BB65F79}">
+                <File Source="..\\bin\\Release\\net9.0-windows\\runtimes\\win-arm64\\native\\WebView2Loader.dll" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ProgramMenuDir" Name="Markdown Viewer">
+        <Component Id="ProgramMenuDirComponent" Guid="{2EA7CBB8-7B5D-4F37-A43B-4845261AC67A}">
+          <RegistryValue Root="HKCU" Key="Software\MarkdownViewer" Name="StartMenu" Type="integer" Value="1" KeyPath="yes" />
+          <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuDir" Name="Markdown Viewer" 
+                   Target="[INSTALLFOLDER]markdown-viewer.exe" 
+                   WorkingDirectory="INSTALLFOLDER" 
+                   Icon="AppIcon" />
+          <RemoveFile Id="RemoveStartMenuShortcut" Directory="ProgramMenuDir" Name="Markdown Viewer.lnk" On="uninstall" />
+          <RemoveFile Id="RemoveStartMenuDir" Directory="ProgramMenuDir" Name="*" On="both" />
+          <RemoveFolder Id="RemoveProgramMenuDir" Directory="ProgramMenuDir" On="uninstall" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+    <Feature Id="ProductFeature" Title="Markdown Viewer" Level="1">
+      <ComponentRef Id="ExeComponent" />
+      <ComponentRef Id="DllComponent" />
+      <ComponentRef Id="PdbComponent" />
+      <ComponentRef Id="MarkdigComponent" />
+      <ComponentRef Id="DepsJsonComponent" />
+      <ComponentRef Id="RuntimeConfigJsonComponent" />
+      <ComponentRef Id="WebView2CoreComponent" />
+      <ComponentRef Id="WebView2WinFormsComponent" />
+      <ComponentRef Id="WebView2WpfComponent" />
+      <ComponentRef Id="WebView2CoreXmlComponent" />
+      <ComponentRef Id="WebView2WinFormsXmlComponent" />
+      <ComponentRef Id="WebView2WpfXmlComponent" />
+      <ComponentRef Id="WebView2LoaderX64" />
+      <ComponentRef Id="WebView2LoaderX86" />
+      <ComponentRef Id="WebView2LoaderARM64" />
+      <ComponentRef Id="ProgramMenuDirComponent" />
+    </Feature>
+  </Package>
+</Wix>
